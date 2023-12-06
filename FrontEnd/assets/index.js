@@ -4,18 +4,19 @@ const gallery = document.querySelector(".gallery");
 let works = [];
 let categories = [];
 const filtersContainer = document.querySelector(".filtres");
-
+const filtreBtn = document.querySelectorAll(".filtres-btn");
 
 // Récupération des projets depuis l'API et création & affichage des éléments via une fonction //
 
-function workImport () {
+function workImport() {
     fetch("http://localhost:5678/api/works")
-    .then(res => res.json())
-    .then(data => {
-        works = data
-        const images = data;
-        showWorks(images);
-})};
+        .then(res => res.json())
+        .then(data => {
+            works = data
+            const images = data;
+            showWorks(images);
+        })
+};
 workImport();
 
 function showWorks(i) {
@@ -34,7 +35,7 @@ function showWorks(i) {
     });
 }
 
-// Récupération des filtres via l'API et création des boutons //
+// Récupération des filtres via l'API et création des boutons + tri par catégories au clic //
 
 fetch("http://localhost:5678/api/categories")
     .then(res => res.json())
@@ -44,15 +45,23 @@ fetch("http://localhost:5678/api/categories")
         filters.forEach(filterName => {
             const filterElement = document.createElement("div");
             filterElement.className = "filtres-btn";
-            filterElement.setAttribute("id", filterName.name);
             filtersContainer.appendChild(filterElement);
             filterElement.textContent = filterName.name;
+
+            filterElement.addEventListener("click", () => {
+                filterElement.classList.add("filtres-btn-selected");
+                gallery.innerHTML = "";
+                const filtreWorks = works.filter(function (category) {
+                    return category.categoryId === filterName.id;
+                });
+                showWorks(filtreWorks);
+            });
         });
 });
 
-// Création et affichage du bouton "tous" //
+// Création et affichage du bouton filtre "tous" //
 
-function createTous () {
+function createTous() {
     const filterTous = document.createElement("div");
     filterTous.className = "filtres-btn";
     filterTous.setAttribute("id", "tous");
@@ -64,27 +73,9 @@ createTous();
 // Fonctionnement du filtre "tous" : ajout d'un event listener pour ajouter une classe "selected" et afficher toute la galerie //
 
 const tous = document.querySelector("#tous");
-const filtreBtn = document.querySelectorAll(".filtres-btn");
-
-console.log(filtreBtn);
 
 tous.addEventListener("click", () => {
     tous.classList.add("filtres-btn-selected");
-    showWorks();
-});
-
-let ObjetsBtn = document.getElementById("Objets");
-
-console.log(ObjetsBtn);
-
-// Fonctionnement des filtres : ajout d'un event listener pour afficher une galerie selon une selection //
-
-ObjetsBtn.addEventListener("click", () => {
-    ObjetsBtn.classList.add( "filtres-btn-selected");
     gallery.innerHTML = "";
-    const  filtreObjet = works.filter(function(category){
-        return category.categoryId === 1;
-    });
-    console.log(filtreObjet);
-    showWorks(filtreObjet); 
+    workImport();
 });
