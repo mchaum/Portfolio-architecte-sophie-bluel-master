@@ -1,4 +1,3 @@
-
 // Création d'une fonction login qui récupère les données de connexion, les envoie au serveur et redirige l'utilisateur s'il peut se connecter ou lui indique un message d'erreur //
 
 async function login() {
@@ -25,8 +24,9 @@ async function login() {
                 res.json()
                     .then((data) => {
                         if (localStorage.user = data.token)
-                            sessionStorage.setItem("Token", data.token);
-                            window.location.href = ("./admin.html");
+                            // Sauvegarde du token dans le session storage & redirection //
+                            localStorage.setItem("token", data.token);
+                            window.location.href = ("./index.html");
                     })
             } else {
                 document.querySelector(".error").innerHTML = "L'identifiant ou le mot de passe est incorrect";
@@ -36,7 +36,6 @@ async function login() {
 
 // Ajout d'un évènement au clic pour la connexion //
 
-// Déclaration des variables //
 const btnLogin = document.querySelector(".submit");
 
 btnLogin.addEventListener("click", (i) => {
