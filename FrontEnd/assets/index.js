@@ -1,4 +1,4 @@
-////////// Affichage dynamique de la galerie et des filtres //////////
+////////// Affichage dynamique de la galerie //////////
 
 // Déclaration des variables //
 
@@ -8,7 +8,7 @@ let categories = [];
 const filtersContainer = document.querySelector(".filtres");
 const filtreBtn = document.querySelectorAll(".filtres-btn");
 
-// Récupération des projets depuis l'API et création & affichage des éléments via une fonction //
+// Récupération des projets via l'API et création & affichage des éléments via une fonction //
 
 function workImport() {
     fetch("http://localhost:5678/api/works")
@@ -36,6 +36,8 @@ function showWorks(i) {
         figureElement.appendChild(figCaptionElement);
     });
 }
+
+///////// Affichage dynamique des filtres //////////
 
 // Récupération des filtres via l'API et création des boutons + tri par catégories au clic //
 
@@ -83,8 +85,6 @@ function createTous() {
     filtersContainer.appendChild(filterTous);
 
     filterTous.addEventListener("click", () => {
-        console.log(filterTous)
-
         // Suppression de la classe "filtres-btn-selected" sur les boutons non sélectionnés //
         if (selectedFilter) {
             selectedFilter.classList.remove("filtres-btn-selected");
@@ -133,21 +133,12 @@ document.addEventListener("DOMContentLoaded", () => {
 // Retour à la page initiale lors de la déconnexion //
 
 function adminLogout() {
-    console.log("Logging out");
-    console.log("editBanner before:", editBanner.style.display);
-    console.log("modifier before:", modifier.style.display);
-    console.log("filtersContainer before:", filtersContainer.style.display);
-
     editBanner.style.display = "none";
     modifier.style.display = "none";
     filtersContainer.style.display = "flex";
     logoutBtn.style.display = "none";
     loginBtn.style.display = "block";
     projectTitle.style.display = "flex";
-
-    console.log("editBanner after:", editBanner.style.display);
-    console.log("modifier after:", modifier.style.display);
-    console.log("filtersContainer after:", filtersContainer.style.display);
 }
 
 

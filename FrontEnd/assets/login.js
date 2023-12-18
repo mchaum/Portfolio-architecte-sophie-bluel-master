@@ -24,7 +24,7 @@ async function login() {
                 res.json()
                     .then((data) => {
                         if (localStorage.user = data.token)
-                            // Sauvegarde du token dans le session storage & redirection //
+                            // Sauvegarde du token dans le local storage & redirection //
                             localStorage.setItem("token", data.token);
                             window.location.href = ("./index.html");
                     })

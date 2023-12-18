@@ -41,7 +41,6 @@ const stopPropagation = function (e) {
 
 document.querySelectorAll(".js-modal").forEach(a => {
     a.addEventListener("click", openModal);
-
 })
 
 // Déclaration des variables pour l'affichage des travaux dans la modale //
@@ -203,7 +202,7 @@ function verifInput() {
     const titleValue = document.getElementById("title").value;
     const categoryValue = document.getElementById("category").value;
 
-    if (photoValue !== "" && titleValue !== "" && categoryValue !== "0") {
+    if (photoValue !== "" && titleValue !== "" && categoryValue !== "") {
         BtnValider.style.backgroundColor = "#1d6154";
     }
 }
@@ -215,7 +214,7 @@ document.getElementById("title").addEventListener("input", verifInput);
 document.getElementById("category").addEventListener("input", verifInput);
 
 
-// Envoi des données du formulaire à l'API pour ajouter une photo et actualisation de la galerie //
+// Envoi des données du formulaire via l'API pour ajouter une photo et actualisation de la galerie //
 
 function addWork() {
     const fileInput = document.getElementById("photo");
@@ -228,7 +227,7 @@ function addWork() {
     formData.append("title", titleValue);
     formData.append("category", Number(categoryValue));
 
-    // Envoi des données à l'API //
+    // Envoi des données via l'API //
     fetch("http://localhost:5678/api/works", {
         method: "POST",
         headers: {
@@ -266,7 +265,7 @@ addForm.addEventListener("submit", (e) => {
     const titleValue = document.getElementById("title").value;
     const categoryValue = document.getElementById("category").value;
 
-    if (photoValue !== "" && titleValue !== "" && categoryValue !== "0") {
+    if (photoValue !== "" && titleValue !== "" && categoryValue !== "") {
         addWork();
         closeModal2(e);
     } else {
